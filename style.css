@@ -1,5 +1,11 @@
 /* Custom styles */
 
+/* Nav Bar Color */
+.navbar-nav .nav-link {
+    color: blue;
+}
+
+
 /* Set background color */
 body {
   background-color: #f9f9f9;
