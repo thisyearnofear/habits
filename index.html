@@ -7,18 +7,30 @@
 	<link rel="stylesheet" href="style.css">
 	<style>
 		.icon {
-			width: 50px;
-			height: 50px;
+			width: 75px;
+			height: 75px;
 			margin: 10px;
+		}
+		.app-icon {
+			width: 150px;
+			background: transparent;
+			border: none;
+		}
+		.navbar-toggler {
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+		/* Add this CSS to fix the issue with images presenting as a column */
+		.row .col-md-3 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	</style>
 </head>
-<body>
-	<body class="text-center">
+<body class="text-center">
 	<nav class="navbar navbar-expand-lg nafvbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-		Tracker</a>
+        <a class="navbar-brand" href="#">Tracker</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -28,10 +40,10 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="graph.html">Graph</a>
+                    <a class="nav-link" href="#graph">Graph</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="leaderboard.html">Leaderboard</a>
+                    <a class="nav-link" href="#leaderboard">Leaderboard</a>
                 </li>
             </ul>
         </div>
@@ -69,30 +81,39 @@
 						</select>
 					</div>
 					<div class="d-grid gap-2">
-						<button class="btn btn-primary" type="submit">Add Habit</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+<button class="btn btn-primary" type="submit">Add Habit</button>
+</div>
+</form>
+</div>
+</div>
+</div>
 
-	<div class="container mt-5">
-	<h2 class="text-center">App Integrations</h2>
-	<div class="row justify-content-center">
-		<div class="col-md-3 text-center mb-3">
-			<img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid">
-		</div>
-		<div class="col-md-3 text-center mb-3">
-			<img src="images/duolingo.jpeg" alt="Duolingo Icon" class="img-fluid">
-		</div>
-		<div class="col-md-3 text-center mb-3">
-			<img src="images/strava.jpeg" alt="Strava Icon" class="img-fluid">
-		</div>
-		<div class="col-md-3 text-center mb-3">
-			<img src="images/chess.com.png" alt="Chess.com Icon" class="img-fluid">
-		</div>
+<div class="container mt-5">
+<h2 class="text-center">App Integrations</h2>
+<div class="row justify-content-center">
+	<div class="col-md-3 text-center mb-3">
+		<img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid app-icon">
+	</div>
+	<div class="col-md-3 text-center mb-3">
+		<img src="images/duolingo.jpeg" alt="Duolingo Icon" class="img-fluid app-icon">
+	</div>
+	<div class="col-md-3 text-center mb-3">
+		<img src="images/strava.jpeg" alt="Strava Icon" class="img-fluid app-icon">
+	</div>
+	<div class="col-md-3 text-center mb-3">
+		<img src="images/chess.com.png" alt="Chess.com Icon" class="img-fluid app-icon">
 	</div>
 </div>
 
+</div>
+<!-- Add the graph and leaderboard sections with IDs for scrolling -->
+<div id="graph" class="container mt-5">
+	<h2 class="text-center">Graph</h2>
+	<!-- Add your graph content here -->
+</div>
+<div id="leaderboard" class="container mt-5">
+	<h2 class="text-center">Leaderboard</h2>
+	<!-- Add your leaderboard content here -->
+</div>
 </body>
 </html>
