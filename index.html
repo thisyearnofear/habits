@@ -26,6 +26,8 @@
 			align-items: center;
 		}
 	</style>
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="text-center">
 	<nav class="navbar navbar-expand-lg nafvbar-light bg-light">
@@ -61,32 +63,28 @@
 		<h1 class="text-center">Tracker</h1>
 		<p class="lead text-center">1% better a day = 37x better in a year</p>
 
-		<div class="row">
-			<div class="col-md-6 offset-md-3">
-				<form>
-					<div class="mb-3">
-						<label for="habitName" class="form-label">Habit Name</label>
-						<input type="text" class="form-control" id="habitName" placeholder="Enter Habit Name">
-					</div>
-					<div class="mb-3">
-						<label for="habitDate" class="form-label">Habit Date</label>
-						<input type="date" class="form-control" id="habitDate">
-					</div>
-					<div class="mb-3">
-						<label for="habitDone" class="form-label">Habit Done?</label>
-						<select class="form-select" id="habitDone">
-							<option selected disabled>Choose...</option>
-							<option value="yes">Yes</option>
-							<option value="no">No</option>
-						</select>
-					</div>
-					<div class="d-grid gap-2">
-<button class="btn btn-primary" type="submit">Add Habit</button>
-</div>
+		<form id="habitForm">
+  <div class="mb-3">
+    <label for="chessDays" class="form-label">Chess.com</label>
+    <input type="number" min="0" class="form-control" id="chessDays" placeholder="Days in a row">
+  </div>
+  <div class="mb-3">
+    <label for="duolingoDays" class="form-label">Duolingo</label>
+    <input type="number" min="0" class="form-control" id="duolingoDays" placeholder="Days in a row">
+  </div>
+  <div class="mb-3">
+    <label for="stravaDays" class="form-label">Strava</label>
+    <input type="number" min="0" class="form-control" id="stravaDays" placeholder="Days in a row">
+  </div>
+  <div class="mb-3">
+    <label for="yousicianDays" class="form-label">Yousician</label>
+    <input type="number" min="0" class="form-control" id="yousicianDays" placeholder="Days in a row">
+  </div>
+  <div class="d-grid gap-2">
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
 </form>
-</div>
-</div>
-</div>
+
 
 <div class="container mt-5">
 <h2 class="text-center">App Integrations</h2>
@@ -106,14 +104,141 @@
 </div>
 
 </div>
-<!-- Add the graph and leaderboard sections with IDs for scrolling -->
+
 <div id="graph" class="container mt-5">
 	<h2 class="text-center">Graph</h2>
-	<!-- Add your graph content here -->
+	<canvas id="habitChart"></canvas>
 </div>
 <div id="leaderboard" class="container mt-5">
 	<h2 class="text-center">Leaderboard</h2>
-	<!-- Add your leaderboard content here -->
+	<table class="table" id="leaderboardTable">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Score</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Leaderboard content added dynamically -->
+		</tbody>
+	</table>
 </div>
+</div>
+	
+	<script>
+
+
+const habitTable = document.getElementById("habitTable");
+const leaderboardTable = document.getElementById("leaderboardTable");
+
+	const activities = [
+  { name: "Chess.com", days: 1 },
+  { name: "Duolingo", days: 1107 },
+  { name: "Strava", days: 2 },
+  { name: "Yousician", days: 3 },
+updateHabitTable();
+
+];
+
+// Function to update master data every 24 hours
+function updateMasterData() {
+  activities.forEach(activity => {
+    activity.days += 1;
+  });
+  setTimeout(updateMasterData, 24 * 60 * 60 * 1000); // 24 hours
+}
+
+// Call the function to start updating the master data
+updateMasterData();
+
+// Function to handle form submission
+document.getElementById("habitForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const chessDays = parseInt(document.getElementById("chessDays").value) || 0;
+  const duolingoDays = parseInt(document.getElementById("duolingoDays").value) || 0;
+  const stravaDays = parseInt(document.getElementById("stravaDays").value) || 0;
+  const yousicianDays = parseInt(document.getElementById("yousicianDays").value) || 0;
+
+  const userInputData = [
+    { name: "Chess.com", days: chessDays },
+    { name: "Duolingo", days: duolingoDays },
+    { name: "Strava", days: stravaDays },
+    { name: "Yousician", days: yousicianDays },
+  ];
+
+  // Call functions to update the chart and leaderboard with the new data
+  updateChart(userInputData);
+const habitChart = document.getElementById("habitChart").getContext("2d");
+const chart = new Chart(habitChart, {
+  type: "bar",
+  data: {
+    labels: activities.map(activity => activity.name),
+    datasets: [
+      {
+        label: "Days",
+        data: activities.map(activity => activity.days),
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(153, 102, 255, 0.2)"
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 1)",
+          "rgba(255, 99, 132, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(153, 102, 255, 1)"
+        ],
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+
+
+  updateLeaderboard(userInputData);
+});
+
+// Function to update the chart
+function updateChart(userInputData) {
+  chart.data.labels = activities.map(activity => activity.name);
+  chart.data.datasets[0].data = activities.map(activity => activity.days).concat(userInputData.map(user => user.days));
+  chart.update();
+}
+
+// Function to update the leaderboard
+
+function updateLeaderboard(userInputData) {
+  const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
+
+  // Clear existing leaderboard content
+  leaderboardTable.innerHTML = "";
+
+  // Add new leaderboard content
+  sortedData.forEach(user => {
+    const tr = document.createElement("tr");
+    const nameTd = document.createElement("td");
+    const daysTd = document.createElement("td");
+
+    nameTd.textContent = user.name;
+    daysTd.textContent = user.days;
+
+    tr.appendChild(nameTd);
+    tr.appendChild(daysTd);
+    leaderboardTable.appendChild(tr);
+  });
+}
+
+</script>
+
+	
 </body>
 </html>
