@@ -20,17 +20,17 @@
 			background-color: rgba(0, 0, 0, 0.2);
 		}
 		/* Add this CSS to fix the issue with images presenting as a column */
-		.row .col-md-3 {
+		.row .col-3 {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
 	</style>
-	
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3"></script>
 </head>
 <body class="text-center">
-	<nav class="navbar navbar-expand-lg nafvbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Tracker</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,16 +89,16 @@
 <div class="container mt-5">
 <h2 class="text-center">App Integrations</h2>
 <div class="row justify-content-center">
-	<div class="col-md-3 text-center mb-3">
+	<div class="col-3 text-center mb-3">
 		<img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid app-icon">
 	</div>
-	<div class="col-md-3 text-center mb-3">
+	<div class="col-3 text-center mb-3">
 		<img src="images/duolingo.jpeg" alt="Duolingo Icon" class="img-fluid app-icon">
 	</div>
-	<div class="col-md-3 text-center mb-3">
+	<div class="col-3 text-center mb-3">
 		<img src="images/strava.jpeg" alt="Strava Icon" class="img-fluid app-icon">
 	</div>
-	<div class="col-md-3 text-center mb-3">
+	<div class="col-3 text-center mb-3">
 		<img src="images/chess.com.png" alt="Chess.com Icon" class="img-fluid app-icon">
 	</div>
 </div>
@@ -111,134 +111,168 @@
 </div>
 <div id="leaderboard" class="container mt-5">
 	<h2 class="text-center">Leaderboard</h2>
-	<table class="table" id="leaderboardTable">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Score</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!-- Leaderboard content added dynamically -->
-		</tbody>
-	</table>
+		<table class="table" id="leaderboardTable">
+ 	<thead>
+ 		<tr>
+ 			<th>Name</th>
+ 			<th>Score</th>
+ 		</tr>
+ 	</thead>
+ 	<tbody id="leaderboardTableBody"> <!-- Added id to the tbody for easy JavaScript reference -->
+ 		<!-- Leaderboard content added dynamically -->
+ 	</tbody>
+ </table>
+
 </div>
 </div>
 	
 	<script>
+    const activities = [
+      { name: "Chess.com", days: 1 },
+      { name: "Duolingo", days: 1107 },
+      { name: "Strava", days: 2 },
+      { name: "Yousician", days: 3 },
+    ];
 
+    const habitTable = document.getElementById("habitTable");
+    const leaderboardTable = document.getElementById("leaderboardTableBody");
 
-const habitTable = document.getElementById("habitTable");
-const leaderboardTable = document.getElementById("leaderboardTable");
+    // Function to update master data every 24 hours
+    function updateMasterData() {
+      activities.forEach(activity => {
+        activity.days += 1;
+      });
+      setTimeout(updateMasterData, 24 * 60 * 60 * 1000); // 24 hours
+    }
 
-	const activities = [
-  { name: "Chess.com", days: 1 },
-  { name: "Duolingo", days: 1107 },
-  { name: "Strava", days: 2 },
-  { name: "Yousician", days: 3 },
-updateHabitTable();
+    // Call the function to start updating the master data
+    updateMasterData();
 
+    // Initialize the chart outside the event
+    const habitChart = document.getElementById("habitChart").getContext("2d");
+    let chart = new Chart(habitChart, {
+      // chart configuration goes here
+    });
+
+    // Function to update the chart
+    function updateChart(userInputData) {
+      chart.data.labels = activities.map(activity => activity.name);
+      chart.data.datasets[0].data = activities.map(activity => activity.days).concat(userInputData.map(user => user.days));
+      chart.update();
+    }
+
+    // Function to update the leaderboard
+    function updateLeaderboard(userInputData) {
+      const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
+      // Clear existing leaderboard content
+      leaderboardTable.innerHTML = "";
+      // Add new leaderboard content
+      sortedData.forEach(user => {
+        const tr = document.createElement("tr");
+        const nameTd = document.createElement("td");
+        const daysTd = document.createElement("td");
+        nameTd.textContent = user.name;
+        daysTd.textContent = user.days;
+        tr.appendChild(nameTd);
+        tr.appendChild(daysTd);
+        leaderboardTable.appendChild(tr);
+      });
+    }
+
+    // Function to update habit table
+    function updateHabitTable(userInputData) {
+      const tbody = document.getElementById('habitTable').getElementsByTagName('tbody')[0];
+      userInputData.forEach(user => {
+        const newRow = tbody.insertRow();
+        const nameCell = newRow.insertCell(0);
+        const daysCell = newRow.insertCell(1);
+        nameCell.textContent = user.name;
+        daysCell.textContent = user.days;
+      });
+    }
+
+    // Form submission event
+    document.getElementById("habitForm").addEventListener("submit", function (e) {
+      // Prevent form from submitting normally
+      e.preventDefault();
+
+      // Form processing code goes here
+      const chessDays = parseInt(document.getElementById("chessDays").value) || 0;
+      const duolingoDays = parseInt(document.getElementById("duolingoDays").value) || 0;
+      const stravaDays = parseInt(document.getElementById("stravaDays").value) || 0;
+      const yousicianDays = parseInt(document.getElementById("yousicianDays").value) || 0;
+
+      const userInputData = [
+        { name: "Chess.com", days: chessDays },
+        { name: "Duolingo", days: duolingoDays },
+        { name: "Strava", days: stravaDays },
+        { name: "Yousician", days: yousicianDays },
 ];
 
-// Function to update master data every 24 hours
-function updateMasterData() {
-  activities.forEach(activity => {
-    activity.days += 1;
-  });
-  setTimeout(updateMasterData, 24 * 60 * 60 * 1000); // 24 hours
-}
-
-// Call the function to start updating the master data
-updateMasterData();
-
-// Function to handle form submission
-document.getElementById("habitForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const chessDays = parseInt(document.getElementById("chessDays").value) || 0;
-  const duolingoDays = parseInt(document.getElementById("duolingoDays").value) || 0;
-  const stravaDays = parseInt(document.getElementById("stravaDays").value) || 0;
-  const yousicianDays = parseInt(document.getElementById("yousicianDays").value) || 0;
-
-  const userInputData = [
-    { name: "Chess.com", days: chessDays },
-    { name: "Duolingo", days: duolingoDays },
-    { name: "Strava", days: stravaDays },
-    { name: "Yousician", days: yousicianDays },
-  ];
-
-  // Call functions to update the chart and leaderboard with the new data
+	      // Update the table, chart and leaderboard with the user input data
+  updateHabitTable(userInputData);
   updateChart(userInputData);
-const habitChart = document.getElementById("habitChart").getContext("2d");
-const chart = new Chart(habitChart, {
-  type: "bar",
-  data: {
-    labels: activities.map(activity => activity.name),
-    datasets: [
-      {
-        label: "Days",
-        data: activities.map(activity => activity.days),
-        backgroundColor: [
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(153, 102, 255, 0.2)"
-        ],
-        borderColor: [
-          "rgba(75, 192, 192, 1)",
-          "rgba(255, 99, 132, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(153, 102, 255, 1)"
-        ],
-        borderWidth: 1
-      }
-    ]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
-
-
-
   updateLeaderboard(userInputData);
+  
+  // Clear the input fields after submission
+  document.getElementById("chessDays").value = '';
+  document.getElementById("duolingoDays").value = '';
+  document.getElementById("stravaDays").value = '';
+  document.getElementById("yousicianDays").value = '';
 });
+
+/ Function to update habit table
+function updateHabitTable(userInputData) {
+// Clear existing table content
+habitTable.innerHTML = "";
+
+// Add new table content
+userInputData.forEach(user => {
+const tr = document.createElement("tr");
+const nameTd = document.createElement("td");
+const daysTd = document.createElement("td");
+
+nameTd.textContent = user.name;
+daysTd.textContent = user.days;
+
+tr.appendChild(nameTd);
+tr.appendChild(daysTd);
+habitTable.appendChild(tr);
+
+});
+}
 
 // Function to update the chart
 function updateChart(userInputData) {
-  chart.data.labels = activities.map(activity => activity.name);
-  chart.data.datasets[0].data = activities.map(activity => activity.days).concat(userInputData.map(user => user.days));
-  chart.update();
+chart.data.labels = userInputData.map(user => user.name);
+chart.data.datasets[0].data = userInputData.map(user => user.days);
+chart.update();
 }
 
 // Function to update the leaderboard
-
 function updateLeaderboard(userInputData) {
-  const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
+const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
 
-  // Clear existing leaderboard content
-  leaderboardTable.innerHTML = "";
+// Clear existing leaderboard content
+leaderboardTable.innerHTML = "";
 
-  // Add new leaderboard content
-  sortedData.forEach(user => {
-    const tr = document.createElement("tr");
-    const nameTd = document.createElement("td");
-    const daysTd = document.createElement("td");
+// Add new leaderboard content
+sortedData.forEach(user => {
+const tr = document.createElement("tr");
+const nameTd = document.createElement("td");
+const daysTd = document.createElement("td");
 
-    nameTd.textContent = user.name;
-    daysTd.textContent = user.days;
+nameTd.textContent = user.name;
+daysTd.textContent = user.days;
 
-    tr.appendChild(nameTd);
-    tr.appendChild(daysTd);
-    leaderboardTable.appendChild(tr);
-  });
+tr.appendChild(nameTd);
+tr.appendChild(daysTd);
+leaderboardTable.appendChild(tr);
+
+});
 }
-
 </script>
 
-	
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
