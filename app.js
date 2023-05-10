@@ -52,6 +52,7 @@ function updateChart(userInputData) {
   chart.update();
 }
 
+
 // Function to update the leaderboard
 function updateLeaderboard(userInputData) {
   const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
