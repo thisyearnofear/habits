@@ -210,7 +210,6 @@
 ];
 
 	      // Update the table, chart and leaderboard with the user input data
-  updateHabitTable(userInputData);
   updateChart(userInputData);
   updateLeaderboard(userInputData);
   
@@ -220,11 +219,6 @@
   document.getElementById("stravaDays").value = '';
   document.getElementById("yousicianDays").value = '';
 });
-
-/ Function to update habit table
-function updateHabitTable(userInputData) {
-// Clear existing table content
-habitTable.innerHTML = "";
 
 // Add new table content
 userInputData.forEach(user => {
