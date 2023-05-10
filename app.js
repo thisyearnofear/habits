@@ -8,7 +8,6 @@ const activities = [
 const habitTable = document.getElementById("habitTable");
 const leaderboardTable = document.getElementById("leaderboardTableBody");
 
-// Initialize the chart outside the event
 const habitChart = document.getElementById("habitChart").getContext("2d");
 
 let chart = new Chart(habitChart, {
@@ -41,7 +40,6 @@ let chart = new Chart(habitChart, {
     }
 });
 
-// Function to update the chart
 function updateChart(userInputData) {
   chart.data.labels = [...activities, ...userInputData].map(activity => activity.name);
   chart.data.datasets[0].data = [...activities, ...userInputData].map(activity => activity.days);
@@ -49,7 +47,6 @@ function updateChart(userInputData) {
   chart.update();
 }
 
-// Function to update the leaderboard
 function updateLeaderboard(userInputData) {
   const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
   leaderboardTable.innerHTML = "";
@@ -65,7 +62,6 @@ function updateLeaderboard(userInputData) {
   });
 }
 
-// Function to update habit table
 function updateHabitTable(userInputData) {
   const tbody = document.getElementById('habitTable').getElementsByTagName('tbody')[0];
   tbody.innerHTML = "";
@@ -78,9 +74,11 @@ function updateHabitTable(userInputData) {
   });
 }
 
-// Form submission event
-document.getElementById("habitForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+document.querySelectorAll('.inputField').forEach(item => {
+  item.addEventListener('input', updateAll)
+});
+
+function updateAll() {
   let chessDays = document.getElementById('chessDays').value;
   let chessMinutes = document.getElementById('chessMinutes').value;
   let duolingoDays = document.getElementById('duolingoDays').value;
@@ -88,7 +86,7 @@ document.getElementById("habitForm").addEventListener("submit", function (e) {
   let stravaDays = document.getElementById('stravaDays').value;
   let stravaMinutes = document.getElementById('stravaMinutes').value;
   let yousicianDays = document.getElementById('yousicianDays').value;
-  let yousicianMinutes = document.getElementById('yousicianMinutes').value;
+    let yousicianMinutes = document.getElementById('yousicianMinutes').value;
 
   // Form the user input data
   const userInputData = [
@@ -112,7 +110,7 @@ document.getElementById("habitForm").addEventListener("submit", function (e) {
   document.getElementById("stravaMinutes").value = '';
   document.getElementById("yousicianDays").value = '';
   document.getElementById("yousicianMinutes").value = '';
-});
+}
 
 updateChart([]);
 updateLeaderboard([]);
