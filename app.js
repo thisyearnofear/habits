@@ -1,8 +1,8 @@
 const activities = [
-  { name: "Chess.com", days: 1 },
-  { name: "Duolingo", days: 1107 },
-  { name: "Strava", days: 2 },
-  { name: "Yousician", days: 3 },
+  { name: "Chess.com", days: 1, minutes: 30 },
+  { name: "Duolingo", days: 1107, minutes: 15 },
+  { name: "Strava", days: 2, minutes: 60 },
+  { name: "Yousician", days: 3, minutes: 45 },
 ];
 
 const habitTable = document.getElementById("habitTable");
@@ -12,53 +12,47 @@ const leaderboardTable = document.getElementById("leaderboardTableBody");
 const habitChart = document.getElementById("habitChart").getContext("2d");
 
 let chart = new Chart(habitChart, {
-    type: 'line',
+    type: 'bar',
     data: {
-        labels: [], // to be filled with activity names
+        labels: [], 
         datasets: [
             {
-                label: 'Days',
-                data: [], // to be filled with activity days
-                backgroundColor: 'rgba(46, 134, 193, 0.2)', // matches with --primary-color: #2e86c1;
-                borderColor: 'rgba(46, 134, 193, 1)',
-                borderWidth: 2
+                label: 'Days in a row',
+                data: [], 
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Average Minutes per Day',
+                data: [], 
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
             }
         ]
     },
     options: {
         scales: {
             y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Minutes Completed'
-                }
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Streak Days'
-                }
+                beginAtZero: true
             }
         }
     }
 });
 
-
 // Function to update the chart
 function updateChart(userInputData) {
   chart.data.labels = [...activities, ...userInputData].map(activity => activity.name);
   chart.data.datasets[0].data = [...activities, ...userInputData].map(activity => activity.days);
+  chart.data.datasets[1].data = [...activities, ...userInputData].map(activity => activity.minutes);
   chart.update();
 }
-
 
 // Function to update the leaderboard
 function updateLeaderboard(userInputData) {
   const sortedData = [...activities, ...userInputData].sort((a, b) => b.days - a.days);
-  // Clear existing leaderboard content
   leaderboardTable.innerHTML = "";
-  // Add new leaderboard content
   sortedData.forEach(user => {
     const tr = document.createElement("tr");
     const nameTd = document.createElement("td");
@@ -74,7 +68,7 @@ function updateLeaderboard(userInputData) {
 // Function to update habit table
 function updateHabitTable(userInputData) {
   const tbody = document.getElementById('habitTable').getElementsByTagName('tbody')[0];
-  tbody.innerHTML = ""; // Clear existing habit table content
+  tbody.innerHTML = "";
   userInputData.forEach(user => {
     const newRow = tbody.insertRow();
     const nameCell = newRow.insertCell(0);
@@ -86,31 +80,37 @@ function updateHabitTable(userInputData) {
 
 // Form submission event
 document.getElementById("habitForm").addEventListener("submit", function (e) {
-  // Prevent form from submitting normally
   e.preventDefault();
+  let chessDays = document.getElementById('chessDays').value;
+  let chessMinutes = document.getElementById('chessMinutes').value;
+  let duolingoDays = document.getElementById('duolingoDays').value;
+  let duolingoMinutes = document.getElementById('duolingoMinutes').value;
+  let stravaDays = document.getElementById('stravaDays').value;
+  let stravaMinutes = document.getElementById('stravaMinutes').value;
+  let yousicianDays = document.getElementById('yousicianDays').value;
+  let yousicianMinutes = document.getElementById('yousicianMinutes').value;
 
-  // Form processing code goes here
-  const chessDays = parseInt(document.getElementById("chessDays").value) || 0;
-  const duolingoDays = parseInt(document.getElementById("duolingoDays").value) || 0;
-  const stravaDays = parseInt(document.getElementById("stravaDays").value) || 0;
-  const yousicianDays = parseInt(document.getElementById("yousicianDays").value) || 0;
+  // Form the user input data
+  const userInputData = [
+    { name: "Chess.com", days: parseInt(chessDays), minutes: parseInt(chessMinutes) },
+    { name: "Duolingo", days: parseInt(duolingoDays), minutes: parseInt(duolingoMinutes) },
+    { name: "Strava", days: parseInt(stravaDays), minutes: parseInt(stravaMinutes) },
+    { name: "Yousician", days: parseInt(yousicianDays), minutes: parseInt(yousicianMinutes) },
+  ];
 
- const userInputData = [
-  { name: "Chess.com", days: chessDays },
-  { name: "Duolingo", days: duolingoDays },
-  { name: "Strava", days: stravaDays },
-  { name: "Yousician", days: yousicianDays },
-];
+  // Update the table, chart and leaderboard with the user input data
+  updateChart(userInputData);
+  updateLeaderboard(userInputData);
+  updateHabitTable(userInputData);
 
-// Update the table, chart and leaderboard with the user input data
-updateChart(userInputData);
-updateLeaderboard(userInputData);
-updateHabitTable(userInputData);
-
-// Clear the input fields after submission
-document.getElementById("chessDays").value = '';
-document.getElementById("duolingoDays").value = '';
-document.getElementById("stravaDays").value = '';
-document.getElementById("yousicianDays").value = '';
+  // Clear the input fields after submission
+  document.getElementById("chessDays").value = '';
+  document.getElementById("chessMinutes").value = '';
+  document.getElementById("duolingoDays").value = '';
+  document.getElementById("duolingoMinutes").value = '';
+  document.getElementById("stravaDays").value = '';
+  document.getElementById("stravaMinutes").value = '';
+  document.getElementById("yousicianDays").value = '';
+  document.getElementById("yousicianMinutes").value = '';
 });
 
