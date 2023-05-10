@@ -10,11 +10,40 @@ const leaderboardTable = document.getElementById("leaderboardTableBody");
 
 // Initialize the chart outside the event
 const habitChart = document.getElementById("habitChart").getContext("2d");
+
 let chart = new Chart(habitChart, {
-  type: 'line', // or whatever type of chart you want
-  data: {}, // empty data set to be filled later
-  options: {} // add any options you want for your chart
+    type: 'line',
+    data: {
+        labels: [], // to be filled with activity names
+        datasets: [
+            {
+                label: 'Days',
+                data: [], // to be filled with activity days
+                backgroundColor: 'rgba(46, 134, 193, 0.2)', // matches with --primary-color: #2e86c1;
+                borderColor: 'rgba(46, 134, 193, 1)',
+                borderWidth: 2
+            }
+        ]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Minutes Completed'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Streak Days'
+                }
+            }
+        }
+    }
 });
+
 
 // Function to update the chart
 function updateChart(userInputData) {
