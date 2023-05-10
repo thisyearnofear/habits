@@ -20,6 +20,26 @@
 /* Set background color */
 body {
   background-color: var(--bg-color);
+  padding: 20px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.app-icons img {
+  max-width: 50%;
+  height: auto;
 }
 
 /* Style the header */
@@ -27,15 +47,6 @@ header {
   background-color: var(--primary-color);
   color: var(--text-color);
   padding: 10px;
-}
-
-/*Style the body */
-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 
 /* Style the navigation links */
@@ -119,7 +130,7 @@ ul {
 li {
   background-color: var(--text-color);
   padding: 10px;
-  border-radius: 3px;
+  border-radius:   3px;
   box-shadow: 0px 0px 10px var(--input-focus-shadow-color);
   margin-bottom: 10px;
   display: flex;
@@ -139,7 +150,6 @@ li .delete {
 /* Media queries for responsiveness */
 @media (max-width: 600px) {
   body {
-    align-items: flex-start;
     padding: 10px;
   }
 
@@ -167,3 +177,4 @@ li .delete {
     margin-bottom: 10px;
   }
 }
+
