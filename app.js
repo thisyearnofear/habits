@@ -114,3 +114,6 @@ document.getElementById("habitForm").addEventListener("submit", function (e) {
   document.getElementById("yousicianMinutes").value = '';
 });
 
+updateChart([]);
+updateLeaderboard([]);
+
