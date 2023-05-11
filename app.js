@@ -10,71 +10,61 @@ const habitChart = document.getElementById("habitChart").getContext("2d");
 let chart = new Chart(habitChart, {
   type: 'scatter',
   data: {
-    datasets: activities.map((activity, i) => ({
-      label: activity.name,
-      data: [{ x: activity.days, y: activity.hours }],
-      backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
-      borderColor: `hsl(${i * 90}, 70%, 50%)`,
-    })),
+    datasets: [
+      ...activities.map((activity, i) => ({
+        label: activity.name + ' (Papa)',
+        data: [{ x: activity.days, y: activity.hours }],
+        backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
+        borderColor: `hsl(${i * 90}, 70%, 50%)`,
+      })),
+      ...activities.map((activity, i) => ({
+        label: activity.name + ' (You)',
+        data: [],
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        borderColor: `hsl(${i * 90}, 70%, 50%)`,
+        borderWidth: 1,
+        pointStyle: 'circle',
+      })),
+    ],
   },
-  options: {
-    scales: {
-      x: {
-        type: 'linear',
-        title: {
-          display: true,
-          text: 'Days in last week'
-        },
-        beginAtZero: true
-      },
-      y: {
-        type: 'linear',
-        title: {
-          display: true,
-          text: 'Hours in last week'
-        },
-        beginAtZero: true
-      }
-    },
+
     plugins: {
       legend: {
         display: true,
         labels: {
           generateLabels: function (chart) {
-            const datasets = chart.data.datasets;
-            const legendItems = chart.legend.legendItems || [];
-            const legendLabels = [];
+  const datasets = chart.data.datasets;
+  const legendItems = chart.legend.legendItems || [];
+  const legendLabels = [];
 
-            datasets.forEach((dataset, i) => {
-              const label = {
-                text: dataset.label,
-                fillStyle: dataset.backgroundColor,
-                hidden: !chart.isDatasetVisible(i),
-                index: i,
-                datasetIndex: i,
-              };
+  datasets.forEach((dataset, i) => {
+    const label = {
+      text: dataset.label,
+      fillStyle: dataset.backgroundColor,
+      hidden: !chart.isDatasetVisible(i),
+      index: i,
+      datasetIndex: i,
+    };
 
-              if (i < activities.length) {
-                label.text += ' (Papa)';
-              } else {
-                label.text += ' (You)';
-                label.fillStyle = 'rgba(0, 0, 0, 0)';
-                label.pointStyle = 'circle';
-                label.borderWidth = 1;
-              }
+    if (i >= activities.length) {
+      label.fillStyle = 'rgba(0, 0, 0, 0)';
+      label.pointStyle = 'circle';
+      label.borderWidth = 1;
+    }
 
-              if (legendItems[i]) {
-                legendItems[i].text = label.text;
-                legendItems[i].fillStyle = label.fillStyle;
-                legendItems[i].hidden = label.hidden;
-              } else {
-                legendItems[i] = label;
-              }
+    if (legendItems[i]) {
+      legendItems[i].text = label.text;
+      legendItems[i].fillStyle = label.fillStyle;
+      legendItems[i].hidden = label.hidden;
+    } else {
+      legendItems[i] = label;
+    }
 
-              legendLabels.push(legendItems[i]);
-            });
+    legendLabels.push(legendItems[i]);
+  });
 
-            return legendLabels;
+  return legendLabels;
+}
           },
           font: {
             size: 12,
