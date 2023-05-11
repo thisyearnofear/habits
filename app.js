@@ -40,46 +40,37 @@ let chart = new Chart(habitChart, {
 });
 
 document.querySelectorAll('.form-control').forEach(item => {
-  item.addEventListener('input', updateAll)
+  item.addEventListener('input', updateChartRealTime);
 });
 
-
-function updateAll() {
-  let chessDays = document.getElementById('chessDays').value;
-  let chessHours = document.getElementById('chessHours').value;
-  let duolingoDays = document.getElementById('duolingoDays').value;
-  let duolingoHours = document.getElementById('duolingoHours').value;
-  let stravaDays = document.getElementById('stravaDays').value;
-  let stravaHours = document.getElementById('stravaHours').value;
-  let yousicianDays = document.getElementById('yousicianDays').value;
-  let yousicianHours = document.getElementById('yousicianHours').value;
+function updateChartRealTime() {
+  chart.data.datasets.forEach(dataset => {
+    dataset.data = []; // Clear existing data
+  });
 
   const userInputData = [
-    { name: "Chess", days: chessDays, hours: chessHours },
-    { name: "Duolingo", days: duolingoDays, hours: duolingoHours },
-    { name: "Strava", days: stravaDays, hours: stravaHours },
-    { name: "Yousician", days: yousicianDays, hours: yousicianHours},
+    { name: "Chess", days: document.getElementById('chessDays').value, hours: document.getElementById('chessHours').value },
+    { name: "Duolingo", days: document.getElementById('duolingoDays').value, hours: document.getElementById('duolingoHours').value },
+    { name: "Strava", days: document.getElementById('stravaDays').value, hours: document.getElementById('stravaHours').value },
+    { name: "Yousician", days: document.getElementById('yousicianDays').value, hours: document.getElementById('yousicianHours').value },
   ];
 
   userInputData.forEach((user, i) => {
     if (user.days && user.hours) { // Check if both fields are filled
-      let index = chart.data.datasets.findIndex(dataset => dataset.label === user.name);
-      if (index !== -1) {
-        chart.data.datasets[index].data.push({ x: parseInt(user.days), y: parseInt(user.hours) });
-      } else {
-        chart.data.datasets.push({
-          label: user.name,
-          data: [{ x: parseInt(user.days), y: parseInt(user.hours) }],
-          backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
-          borderColor: `hsl(${i * 90}, 70%, 50%)`,
-        });
-      }
-      chart.update();
+      chart.data.datasets.push({
+        label: user.name,
+        data: [{ x: parseInt(user.days), y: parseInt(user.hours) }],
+        backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
+        borderColor: `hsl(${i * 90}, 70%, 50%)`,
+        pointStyle: 'cross', // Set pointStyle to 'cross' for X shape
+      });
     }
   });
+
+  chart.update();
 }
 
 window.onload = function() {
-  updateAll();
+  updateChartRealTime();
 };
 
