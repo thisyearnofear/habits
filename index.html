@@ -12,7 +12,8 @@
 			margin: 10px;
 		}
 		.app-icon {
-			width: 150px;
+			width: 50px;
+			height: 50px;
 			background: transparent;
 			border: none;
 		}
@@ -65,58 +66,56 @@
 	<p class="lead text-center">1% better a day = 37x better in a year</p>
 	
 	<div id="graph" class="container mt-5">
-	<h2 class="text-center">Graph</h2>
-	<canvas id="habitChart"></canvas>
-<canvas id="habitChart" width="900" height="600"></canvas>
-
-</div>
+		<h2 class="text-center">Graph</h2>
+		<canvas id="habitChart" width="900" height="600"></canvas>
+	</div>
 
 	<form id="habitForm">
-  <div class="mb-3 row">
-    <div class="col text-center">
-      <label for="chessDays" class="form-label col-sm-2">Chess</label>
-      <input type="number" min="0" max="7" class="form-control col-sm-5" id="chessDays" placeholder="Days in the last week">
-      <input type="number" min="0" max="10" class="form-control col-sm-5" id="chessMinutes" placeholder="Hours in last week">
-    </div>
+		<div class="mb-3 row">
+			<div class="col text-center">
+				<label for="chessDays" class="form-label col-sm-2">Chess</label>
+				<input type="number" min="0" max="7" class="form-control col-sm-5" id="chessDays" placeholder="Days in the last week">
+				<input type="number" min="0" max="10" class="form-control col-sm-5" id="chessMinutes" placeholder="Hours in last week">
+			</div>
+		</div>
+		<div class="mb-3 row">
+  <div class="col text-center">
+    <label for="duolingoDays" class="form-label col-sm-2">Duolingo</label>
+    <input type="number" min="0" max="7" class="form-control col-sm-5" id="duolingoDays" placeholder="Days in the last week">
+    <input type="number" min="0" max="14" class="form-control col-sm-5" id="duolingoMinutes" placeholder="Hours in last week">
   </div>
-  <div class="mb-3 row">
-    <div class="col text-center">
-      <label for="duolingoDays" class="form-label col-sm-2">Duolingo</label>
-      <input type="number" min="0" max="7" class="form-control col-sm-5" id="duolingoDays" placeholder="Days in the last week">
-      <input type="number" min="0" max="14" class="form-control col-sm-5" id="duolingoMinutes" placeholder="Hours in last week">
-    </div>
+</div>
+<div class="mb-3 row">
+  <div class="col text-center">
+    <label for="stravaDays" class="form-label col-sm-2">Strava</label>
+    <input type="number" min="0" max="7" class="form-control col-sm-5" id="stravaDays" placeholder="Days in the last week">
+    <input type="number" min="0" max="35" class="form-control col-sm-5" id="stravaMinutes" placeholder="Hours in last week">
   </div>
-  <div class="mb-3 row">
-    <div class="col text-center">
-      <label for="stravaDays" class="form-label col-sm-2">Strava</label>
-      <input type="number" min="0" max="7" class="form-control col-sm-5" id="stravaDays" placeholder="Days in the last week">
-      <input type="number" min="0" max="35" class="form-control col-sm-5" id="stravaMinutes" placeholder="Hours in last week">
-    </div>
+</div>
+<div class="mb-3 row">
+  <div class="col text-center">
+    <label for="yousicianDays" class="form-label col-sm-2">Yousician</label>
+    <input type="number" min="0" max="7" class="form-control col-sm-5" id="yousicianDays" placeholder="Days in the last week">
+    <input type="number" min="0" max="7" class="form-control col-sm-5" id="yousicianMinutes" placeholder="Hours in last week">
   </div>
-  <div class="mb-3 row">
-    <div class="col text-center">
-      <label for="yousicianDays" class="form-label col-sm-2">Yousician</label>
-      <input type="number" min="0" max="7" class="form-control col-sm-5" id="yousicianDays" placeholder="Days in the last week">
-      <input type="number" min="0" max="7" class="form-control col-sm-5" id="yousicianMinutes" placeholder="Hours in last week">
-    </div>
-  </div>	  
+</div>
 </form>
 
 
 <div class="container mt-5">
-  <h2 class="text-center" style="font-size: 1.5rem;">App integrations (coming soon)</h2>
+  <h2 class="text-center" style="font-size: 2rem;">App integrations (soon)</h2>
   <div class="row justify-content-center app-icons">
     <div class="col-3 text-center mb-3">
-      <img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid app-icon" style="width: 50px; height: 50px;">
+      <img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid app-icon" style="width: 75px; height: 75px;">
     </div>
 	<div class="col-3 text-center mb-3">
-		<img src="images/duolingo.jpeg" alt="Duolingo Icon" class="img-fluid app-icon" style="width: 50px; height: 50px;">
+		<img src="images/duolingo.jpeg" alt="Duolingo Icon" class="img-fluid app-icon" style="width: 75px; height: 75px;">
 	</div>
 	<div class="col-3 text-center mb-3">
-		<img src="images/strava.jpeg" alt="Strava Icon" class="img-fluid app-icon" style="width: 50px; height: 50px;">
+		<img src="images/strava.jpeg" alt="Strava Icon" class="img-fluid app-icon" style="width: 75px; height: 75px;">
 	</div>
 	<div class="col-3 text-center mb-3">
-		<img src="images/chess.com.png" alt="Chess Icon" class="img-fluid app-icon" style="width: 50px; height: 50px;">
+		<img src="images/chess.com.png" alt="Chess Icon" class="img-fluid app-icon" style="width: 75px; height: 75px;">
 	</div>
     </div>
 </div>
