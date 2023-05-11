@@ -109,6 +109,7 @@ form select {
   width: 100%;
   margin-bottom: 10px;
   font-size: 1.1em;
+  max-width: 100%; /* Adjust the width as needed */
 }
 
 form input[type="text"]:focus,
@@ -395,12 +396,24 @@ li .delete {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px; /* Adjust the margin as needed */
 }
 
 /* Increase the background box size */
 .content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   max-width: 800px;
+  margin: 0 auto; /* Center the content horizontally */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Adjust the margin as needed */
 }
+
 
 /* Increase the graph size */
 #habitChart {
@@ -408,4 +421,14 @@ li .delete {
   max-width: 800px;
   height: auto;
 }
+
+.app-icons {
+  display: flex;
+  justify-content: center; /* Center the icons horizontally */
+  align-items: center; /* Center the icons vertically */
+  margin-top: 20px; /* Adjust the margin as needed */
+}
+
+
+
 
