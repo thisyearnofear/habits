@@ -44,11 +44,6 @@ document.querySelectorAll('.form-control').forEach(item => {
 });
 
 function updateChartRealTime() {
-  chart.data.datasets.forEach(dataset => {
-    dataset.data = []; // Clear existing data
-    dataset.pointStyle = 'circle'; // Set pointStyle to 'circle' for default shape (dots)
-  });
-
   const userInputData = [
     { name: "Chess", days: document.getElementById('chessDays').value, hours: document.getElementById('chessHours').value },
     { name: "Duolingo", days: document.getElementById('duolingoDays').value, hours: document.getElementById('duolingoHours').value },
@@ -56,15 +51,13 @@ function updateChartRealTime() {
     { name: "Yousician", days: document.getElementById('yousicianDays').value, hours: document.getElementById('yousicianHours').value },
   ];
 
-  userInputData.forEach((user, i) => {
-    if (user.days && user.hours) { // Check if both fields are filled
-      chart.data.datasets.push({
-        label: `${user.name} (You)`, // Include " (You)" in the legend label
-        data: [{ x: parseInt(user.days), y: parseInt(user.hours) }],
-        backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
-        borderColor: `hsl(${i * 90}, 70%, 50%)`,
-        pointStyle: 'cross', // Set pointStyle to 'cross' for X shape
-      });
+  chart.data.datasets.forEach((dataset, i) => {
+    if (i >= activities.length) { // Clear and update only user input datasets
+      dataset.data = []; // Clear existing data
+      const userInput = userInputData[i - activities.length]; // Get the corresponding user input
+      if (userInput.days && userInput.hours) { // Check if both fields are filled
+        dataset.data.push({ x: parseInt(userInput.days), y: parseInt(userInput.hours) });
+      }
     }
   });
 
@@ -74,4 +67,3 @@ function updateChartRealTime() {
 window.onload = function() {
   updateChartRealTime();
 };
-
