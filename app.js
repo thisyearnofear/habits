@@ -7,49 +7,6 @@ const activities = [
 
 const habitChart = document.getElementById("habitChart").getContext("2d");
 
-Chart.plugins.register({
-  afterDatasetsDraw: function(chart) {
-    const ctx = chart.ctx;
-    const datasets = chart.data.datasets;
-
-    datasets.forEach((dataset, i) => {
-      if (i >= activities.length) {
-        const meta = chart.getDatasetMeta(i);
-        const radius = meta.pointStyle === 'cross' ? 8 : chart.config.options.elements.point.radius;
-        const borderWidth = meta.pointStyle === 'cross' ? 2 : chart.config.options.elements.point.borderWidth;
-
-        ctx.save();
-        ctx.fillStyle = dataset.backgroundColor;
-        ctx.strokeStyle = dataset.borderColor;
-        ctx.lineWidth = borderWidth;
-
-        meta.data.forEach((element, index) => {
-          const dataPoint = dataset.data[index];
-          const x = element.x;
-          const y = element.y;
-
-          if (x !== null && y !== null && element.skip !== true) {
-            ctx.beginPath();
-            if (meta.pointStyle === 'cross') {
-              ctx.moveTo(x - radius, y - radius);
-              ctx.lineTo(x + radius, y + radius);
-              ctx.moveTo(x - radius, y + radius);
-              ctx.lineTo(x + radius, y - radius);
-            } else {
-              ctx.arc(x, y, radius, 0, Math.PI * 2);
-            }
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-          }
-        });
-
-        ctx.restore();
-      }
-    });
-  }
-});
-
 let chart = new Chart(habitChart, {
   type: 'scatter',
   data: {
@@ -78,39 +35,6 @@ let chart = new Chart(habitChart, {
         },
         beginAtZero: true
       }
-    },
-    elements: {
-      point: {
-        radius: 5,
-        borderWidth: 1
-      }
-    },
-    plugins: {
-      legend: {
-        labels: {
-          generateLabels: function (chart) {
-            const datasets = chart.data.datasets;
-            const legendItems = chart.legend.legendItems;
-            const legendLabels = [];
-
-            datasets.forEach((dataset, i) => {
-              const label = {
-                text: `${dataset.label} (${i < activities.length ? 'Papa' : 'You'})`,
-                fillStyle: dataset.backgroundColor,
-                strokeStyle: dataset.borderColor,
-                lineWidth: dataset.borderWidth,
-                hidden: !chart.isDatasetVisible(i),
-                index: i,
-                datasetIndex: i,
-              };
-              legendItems[i] = label;
-              legendLabels.push(label);
-            });
-
-                        return legendLabels;
-          }
-        }
-      }
     }
   }
 });
@@ -137,10 +61,32 @@ function updateChartRealTime() {
     }
   });
 
+  // Update legend labels
+  chart.options.plugins.legend.labels.generateLabels = function (chart) {
+    const datasets = chart.data.datasets;
+    const legendItems = chart.legend.legendItems;
+    const legendLabels = [];
+
+    datasets.forEach((dataset, i) => {
+      const label = {
+        text: `${dataset.label} (${i < activities.length ? 'Papa' : 'You'})`,
+        fillStyle: dataset.backgroundColor,
+        strokeStyle: dataset.borderColor,
+        lineWidth: dataset.borderWidth,
+        hidden: !chart.isDatasetVisible(i),
+        index: i,
+        datasetIndex: i,
+      };
+      legendItems[i] = label;
+      legendLabels.push(label);
+    });
+
+    return legendLabels;
+  };
+
   chart.update();
 }
 
 window.onload = function() {
   updateChartRealTime();
 };
-
