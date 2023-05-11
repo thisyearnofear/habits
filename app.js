@@ -95,9 +95,15 @@ document.querySelectorAll('.form-control').forEach(item => {
 
 function validateInput() {
   const maxDays = parseInt(this.getAttribute('max'));
-  const maxHours = parseInt(this.nextElementSibling.getAttribute('max'));
-  const inputDays = parseInt(this.value);
-  const inputHours = parseInt(this.nextElementSibling.value);
+  const maxHours = parseInt(this.nextElementSibling?.getAttribute('max') ?? this.getAttribute('max'));
+  if (parseInt(this.value) > maxDays) {
+    this.value = maxDays;
+  }
+  if (parseInt(this.nextElementSibling?.value) > maxHours) {
+    this.nextElementSibling.value = maxHours;
+  }
+}
+
 
   if (isNaN(inputDays) || inputDays > maxDays) {
     this.value = maxDays;
