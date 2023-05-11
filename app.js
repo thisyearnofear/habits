@@ -7,39 +7,85 @@ const activities = [
 
 const habitChart = document.getElementById("habitChart").getContext("2d");
 
-let chart = new Chart(habitChart, {
-    type: 'scatter',
-    data: {
-        datasets: activities.map((activity, i) => ({
-            label: activity.name,
-            data: [{ x: activity.days, y: activity.hours }],
-            backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
-            borderColor: `hsl(${i * 90}, 70%, 50%)`,
-              pointStyle: i < activities.length ? 'circle' : 'cross',
-      pointRadius: 8,
-      pointBorderWidth: 2,
-        })),
-    },
-    options: {
-        scales: {
-            x: {
-                type: 'linear',
-                title: {
-                    display: true,
-                    text: 'Days in last week'
-                },
-                beginAtZero: true
-            },
-            y: {
-                type: 'linear',
-                title: {
-                    display: true,
-                    text: 'Hours in last week'
-                },
-                beginAtZero: true
+Chart.plugins.register({
+  afterDatasetsDraw: function(chart) {
+    const ctx = chart.ctx;
+    const datasets = chart.data.datasets;
+
+    datasets.forEach((dataset, i) => {
+      if (i >= activities.length) {
+        const meta = chart.getDatasetMeta(i);
+        const radius = meta.pointStyle === 'cross' ? 8 : chart.config.options.elements.point.radius;
+        const borderWidth = meta.pointStyle === 'cross' ? 2 : chart.config.options.elements.point.borderWidth;
+
+        ctx.save();
+        ctx.fillStyle = dataset.backgroundColor;
+        ctx.strokeStyle = dataset.borderColor;
+        ctx.lineWidth = borderWidth;
+
+        meta.data.forEach((element, index) => {
+          const dataPoint = dataset.data[index];
+          const x = element.x;
+          const y = element.y;
+
+          if (x !== null && y !== null && element.skip !== true) {
+            ctx.beginPath();
+            if (meta.pointStyle === 'cross') {
+              ctx.moveTo(x - radius, y - radius);
+              ctx.lineTo(x + radius, y + radius);
+              ctx.moveTo(x - radius, y + radius);
+              ctx.lineTo(x + radius, y - radius);
+            } else {
+              ctx.arc(x, y, radius, 0, Math.PI * 2);
             }
-        }
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          }
+        });
+
+        ctx.restore();
+      }
+    });
+  }
+});
+
+let chart = new Chart(habitChart, {
+  type: 'scatter',
+  data: {
+    datasets: activities.map((activity, i) => ({
+      label: activity.name,
+      data: [{ x: activity.days, y: activity.hours }],
+      backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
+      borderColor: `hsl(${i * 90}, 70%, 50%)`,
+    })),
+  },
+  options: {
+    scales: {
+      x: {
+        type: 'linear',
+        title: {
+          display: true,
+          text: 'Days in last week'
+        },
+        beginAtZero: true
+      },
+      y: {
+        type: 'linear',
+        title: {
+          display: true,
+          text: 'Hours in last week'
+        },
+        beginAtZero: true
+      }
+    },
+    elements: {
+      point: {
+        radius: 5,
+        borderWidth: 1
+      }
     }
+  }
 });
 
 document.querySelectorAll('.form-control').forEach(item => {
