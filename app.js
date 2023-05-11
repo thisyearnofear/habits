@@ -49,7 +49,7 @@ function updateAll() {
   let chessHours = document.getElementById('chessHours').value;
   let duolingoDays = document.getElementById('duolingoDays').value;
   let duolingoHours = document.getElementById('duolingoHours').value;
-  let stravaDays = document.getElementById('stravaHours').value;
+  let stravaDays = document.getElementById('stravaDays').value;
   let stravaHours = document.getElementById('stravaHours').value;
   let yousicianDays = document.getElementById('yousicianDays').value;
   let yousicianHours = document.getElementById('yousicianHours').value;
