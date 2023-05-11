@@ -7,7 +7,7 @@ const activities = [
 
 const habitChart = document.getElementById("habitChart").getContext("2d");
 
-let chart = new Chart(habitChart, {
+let chart = new Chart(habitChart.getContext("2d"), {
   type: 'scatter',
   data: {
     datasets: activities.map((activity, i) => ({
@@ -122,7 +122,7 @@ function updateChartRealTime() {
     { name: "Yousician", days: document.getElementById('yousicianDays').value, hours: document.getElementById('yousicianHours').value },
   ];
 
-  chart.data.datasets.forEach((dataset, i) => {
+  chart.data.datasets.forEach((dataset, i) => {    
     if (i >= activities.length) { // Clear and update only user input datasets
       dataset.data = []; // Clear existing data
       const userInput = userInputData[i - activities.length]; // Get the corresponding user input
