@@ -7,7 +7,7 @@ const activities = [
 
 const habitChart = document.getElementById("habitChart").getContext("2d");
 
-let chart = new Chart(habitChart.getContext("2d"), {
+let chart = new Chart(habitChart, {
   type: 'scatter',
   data: {
     datasets: activities.map((activity, i) => ({
@@ -96,18 +96,14 @@ document.querySelectorAll('.form-control').forEach(item => {
 function validateInput() {
   const maxDays = parseInt(this.getAttribute('max'));
   const maxHours = parseInt(this.nextElementSibling?.getAttribute('max') ?? this.getAttribute('max'));
-  
-  const inputDays = parseInt(this.value);
-  const inputHours = parseInt(this.nextElementSibling?.value);
-
-  if (isNaN(inputDays) || inputDays > maxDays) {
+  if (parseInt(this.value) > maxDays) {
     this.value = maxDays;
   }
-
-  if (isNaN(inputHours) || inputHours > maxHours) {
+  if (parseInt(this.nextElementSibling?.value) > maxHours) {
     this.nextElementSibling.value = maxHours;
   }
 }
+
 
 function updateChartRealTime() {
   const userInputData = [
