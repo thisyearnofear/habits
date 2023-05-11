@@ -19,72 +19,71 @@
 		.navbar-toggler {
 			background-color: rgba(0, 0, 0, 0.2);
 		}
-		/* Add this CSS to fix the issue with images presenting as a column */
 		.row .col-3 {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
 	</style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/css/bootstrap.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3"></script>
-<script src="app.js"></script>
-
+	<script src="app.js"></script>
 </head>
 <body class="text-center">
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Tracker</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="#">Run</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#graph">Graph</a>
+                    <a class="nav-link" href="#graph">Chess</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#leaderboard">Leaderboard</a>
+                    <a class="nav-link" href="#">Language</a>
+                </li>
+				<li class="nav-item">
+                    <a class="nav-link" href="#">Music</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 	
-	<table class="table" id="habitTable">
- 
+<table class="table" id="habitTable">
   <tbody>
     <!-- Table rows added dynamically by the JavaScript code -->
   </tbody>
 </table>
 
-	<div class="container mt-5 content-container">
-        <h1 class="text-center">Tracker</h1>
-		<p class="lead text-center">1% better a day = 37x better in a year</p>
+<div class="container mt-5 content-container">
+	<h1 class="text-center">Tracker</h1>
+	<p class="lead text-center">1% better a day = 37x better in a year</p>
 
-		<form id="habitForm">
+	<form id="habitForm">
   <div class="mb-3">
-    <label for="chessDays" class="form-label">Chess.com</label>
-    <input type="number" min="0" class="form-control" id="chessDays" placeholder="Days in a row">
-    <input type="number" min="0" class="form-control" id="chessMinutes" placeholder="Avg mins per day">
+    <label for="chessDays" class="form-label">Chess</label>
+    <input type="number" min="0" class="form-control" id="chessDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control" id="chessMinutes" placeholder="Total mins in last week">
   </div>
   <div class="mb-3">
     <label for="duolingoDays" class="form-label">Duolingo</label>
-    <input type="number" min="0" class="form-control" id="duolingoDays" placeholder="Days in a row">
-    <input type="number" min="0" class="form-control" id="duolingoMinutes" placeholder="Avg mins per day">
+    <input type="number" min="0" class="form-control" id="duolingoDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control" id="duolingoMinutes" placeholder="Total mins in last week">
   </div>
-  <div class="mb-3">
+ <div class="mb-3">
     <label for="stravaDays" class="form-label">Strava</label>
-    <input type="number" min="0" class="form-control" id="stravaDays" placeholder="Days in a row">
-    <input type="number" min="0" class="form-control" id="stravaMinutes" placeholder="Avg mins per day">
+    <input type="number" min="0" class="form-control" id="stravaDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control" id="stravaMinutes" placeholder="Total mins in last week">
   </div>
   <div class="mb-3">
     <label for="yousicianDays" class="form-label">Yousician</label>
-    <input type="number" min="0" class="form-control" id="yousicianDays" placeholder="Days in a row">
-    <input type="number" min="0" class="form-control" id="yousicianMinutes" placeholder="Avg mins per day">
+    <input type="number" min="0" class="form-control" id="yousicianDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control" id="yousicianMinutes" placeholder="Total mins in last week">
   </div>
   <div class="d-grid gap-2">
     <button class="btn btn-primary" type="submit">Submit</button>
@@ -92,11 +91,11 @@
 </form>
 
 <div class="container mt-5">
-            <h2 class="text-center">App Integrations</h2>
-            <div class="row justify-content-center app-icons">
-                <div class="col-3 text-center mb-3">
-                    <img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid app-icon">
-                </div>
+    <h2 class="text-center">App Integrations (coming soon)</h2>
+    <div class="row justify-content-center app-icons">
+        <div class="col-3 text-center mb-3">
+            <img src="images/yousician.jpeg" alt="Yousician Icon" class="img-fluid app-icon">
+        </div>
 	<div class="col-3 text-center mb-3">
 		<img src="images/duolingo.jpeg" alt="Duolingo Icon" class="img-fluid app-icon">
 	</div>
@@ -104,33 +103,17 @@
 		<img src="images/strava.jpeg" alt="Strava Icon" class="img-fluid app-icon">
 	</div>
 	<div class="col-3 text-center mb-3">
-		<img src="images/chess.com.png" alt="Chess.com Icon" class="img-fluid app-icon">
+		<img src="images/chess.com.png" alt="Chess Icon" class="img-fluid app-icon">
 	</div>
-</div>
-
+    </div>
 </div>
 
 <div id="graph" class="container mt-5">
 	<h2 class="text-center">Graph</h2>
 	<canvas id="habitChart"></canvas>
 </div>
-<div id="leaderboard" class="container mt-5">
-	<h2 class="text-center">Leaderboard</h2>
-		<table class="table" id="leaderboardTable">
- 	<thead>
- 		<tr>
- 			<th>Name</th>
- 			<th>Score</th>
- 		</tr>
- 	</thead>
- 	<tbody id="leaderboardTableBody"> <!-- Added id to the tbody for easy JavaScript reference -->
- 		<!-- Leaderboard content added dynamically -->
- 	</tbody>
- </table>
 
-</div>
-</div>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
-	
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+ 
