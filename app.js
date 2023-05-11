@@ -15,6 +15,9 @@ let chart = new Chart(habitChart, {
             data: [{ x: activity.days, y: activity.hours }],
             backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
             borderColor: `hsl(${i * 90}, 70%, 50%)`,
+              pointStyle: i < activities.length ? 'circle' : 'cross',
+      pointRadius: 8,
+      pointBorderWidth: 2,
         })),
     },
     options: {
@@ -60,6 +63,29 @@ function updateChartRealTime() {
       }
     }
   });
+
+  // Update legend labels
+  chart.options.plugins.legend.labels.generateLabels = function (chart) {
+    const datasets = chart.data.datasets;
+    const legendItems = chart.legend.legendItems;
+    const legendLabels = [];
+
+    datasets.forEach((dataset, i) => {
+      const label = {
+        text: `${dataset.label} (${i < activities.length ? 'Papa' : 'You'})`,
+        fillStyle: dataset.backgroundColor,
+        strokeStyle: dataset.borderColor,
+        lineWidth: dataset.borderWidth,
+        hidden: !chart.isDatasetVisible(i),
+        index: i,
+        datasetIndex: i,
+      };
+      legendItems[i] = label;
+      legendLabels.push(label);
+    });
+
+    return legendLabels;
+  };
 
   chart.update();
 }
