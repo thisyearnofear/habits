@@ -30,7 +30,7 @@
 	
 </head>
 <body class="text-center">
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -63,30 +63,32 @@
 <div class="container mt-5 content-container">
 	<h1 class="text-center">Tracker</h1>
 	<p class="lead text-center">1% better a day = 37x better in a year</p>
+	
+	<div id="graph" class="container mt-5">
+	<h2 class="text-center">Graph</h2>
+	<canvas id="habitChart"></canvas>
+</div>
 
 	<form id="habitForm">
-  <div class="mb-3">
-    <label for="chessDays" class="form-label">Chess</label>
-    <input type="number" min="0" class="form-control inputField" id="chessDays" placeholder="Days in the last week">
-    <input type="number" min="0" class="form-control inputField" id="chessMinutes" placeholder="Total mins in last week">
+  <div class="mb-3 row">
+    <label for="chessDays" class="form-label col-sm-2">Chess</label>
+    <input type="number" min="0" class="form-control col-sm-5" id="chessDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control col-sm-5" id="chessMinutes" placeholder="Total mins in last week">
+  </div>
+  <div class="mb-3 row">
+    <label for="duolingoDays" class="form-label col-sm-2">Duolingo</label>
+    <input type="number" min="0" class="form-control col-sm-5" id="duolingoDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control col-sm-5" id="duolingoMinutes" placeholder="Total mins in last week">
+  </div>
+  <div class="mb-3 row">
+    <label for="stravaDays" class="form-label col-sm-2">Strava</label>
+    <input type="number" min="0" class="form-control col-sm-5" id="stravaDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control col-sm-5" id="stravaMinutes" placeholder="Total mins in last week">
   </div>
   <div class="mb-3">
-    <label for="duolingoDays" class="form-label">Duolingo</label>
-    <input type="number" min="0" class="form-control inputField" id="duolingoDays" placeholder="Days in the last week">
-    <input type="number" min="0" class="form-control inputField" id="duolingoMinutes" placeholder="Total mins in last week">
-  </div>
-  <div class="mb-3">
-    <label for="stravaDays" class="form-label">Strava</label>
-    <input type="number" min="0" class="form-control inputField" id="stravaDays" placeholder="Days in the last week">
-    <input type="number" min="0" class="form-control inputField" id="stravaMinutes" placeholder="Total mins in last week">
-  </div>
-  <div class="mb-3">
-    <label for="yousicianDays" class="form-label">Yousician</label>
-    <input type="number" min="0" class="form-control inputField" id="yousicianDays" placeholder="Days in the last week">
-    <input type="number" min="0" class="form-control inputField" id="yousicianMinutes" placeholder="Total mins in last week">
-  </div>
-  <div class="d-grid gap-2">
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <label for="yousicianDays" class="form-label col-sm-2">Yousician</label>
+    <input type="number" min="0" class="form-control col-sm-5" id="yousicianDays" placeholder="Days in the last week">
+    <input type="number" min="0" class="form-control col-sm-5" id="yousicianMinutes" placeholder="Total mins in last week">
   </div>
 </form>
 
@@ -109,10 +111,7 @@
     </div>
 </div>
 
-<div id="graph" class="container mt-5">
-	<h2 class="text-center">Graph</h2>
-	<canvas id="habitChart"></canvas>
-</div>
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
