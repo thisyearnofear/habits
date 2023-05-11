@@ -1,8 +1,8 @@
 const activities = [
-  { name: "Chess", days: 1, minutes: 30 },
-  { name: "Duolingo", days: 1107, minutes: 15 },
-  { name: "Strava", days: 2, minutes: 60 },
-  { name: "Yousician", days: 3, minutes: 45 },
+  { name: "Chess", days: 5, hours: 7 },
+  { name: "Duolingo", days: 7, hours: 1 },
+  { name: "Strava", days: 1, hours: 1 },
+  { name: "Yousician", days: 3, hours: 1 },
 ];
 
 const habitChart = document.getElementById("habitChart").getContext("2d");
@@ -12,7 +12,7 @@ let chart = new Chart(habitChart, {
     data: {
         datasets: activities.map((activity, i) => ({
             label: activity.name,
-            data: [{ x: activity.days, y: activity.minutes }],
+            data: [{ x: activity.days, y: activity.hours }],
             backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
             borderColor: `hsl(${i * 90}, 70%, 50%)`,
         })),
@@ -23,7 +23,7 @@ let chart = new Chart(habitChart, {
                 type: 'linear',
                 title: {
                     display: true,
-                    text: 'Days in the last week'
+                    text: 'Days in last week'
                 },
                 beginAtZero: true
             },
@@ -31,7 +31,7 @@ let chart = new Chart(habitChart, {
                 type: 'linear',
                 title: {
                     display: true,
-                    text: 'Total minutes in last week'
+                    text: 'Hours in last week'
                 },
                 beginAtZero: true
             }
@@ -46,30 +46,30 @@ document.querySelectorAll('.form-control').forEach(item => {
 
 function updateAll() {
   let chessDays = document.getElementById('chessDays').value;
-  let chessMinutes = document.getElementById('chessMinutes').value;
+  let chessHours = document.getElementById('chessHours').value;
   let duolingoDays = document.getElementById('duolingoDays').value;
-  let duolingoMinutes = document.getElementById('duolingoMinutes').value;
-  let stravaDays = document.getElementById('stravaDays').value;
-  let stravaMinutes = document.getElementById('stravaMinutes').value;
+  let duolingoHours = document.getElementById('duolingoHours').value;
+  let stravaDays = document.getElementById('stravaHours').value;
+  let stravaHours = document.getElementById('stravaHours').value;
   let yousicianDays = document.getElementById('yousicianDays').value;
-  let yousicianMinutes = document.getElementById('yousicianMinutes').value;
+  let yousicianHours = document.getElementById('yousicianHours').value;
 
   const userInputData = [
-    { name: "Chess", days: chessDays, minutes: chessMinutes },
-    { name: "Duolingo", days: duolingoDays, minutes: duolingoMinutes },
-    { name: "Strava", days: stravaDays, minutes: stravaMinutes },
-    { name: "Yousician", days: yousicianDays, minutes: yousicianMinutes },
+    { name: "Chess", days: chessDays, hours: chessHours },
+    { name: "Duolingo", days: duolingoDays, hours: duolingoHours },
+    { name: "Strava", days: stravaDays, hours: stravaHours },
+    { name: "Yousician", days: yousicianDays, hours: yousicianHours},
   ];
 
   userInputData.forEach((user, i) => {
-    if (user.days && user.minutes) { // Check if both fields are filled
+    if (user.days && user.hours) { // Check if both fields are filled
       let index = chart.data.datasets.findIndex(dataset => dataset.label === user.name);
       if (index !== -1) {
-        chart.data.datasets[index].data.push({ x: parseInt(user.days), y: parseInt(user.minutes) });
+        chart.data.datasets[index].data.push({ x: parseInt(user.days), y: parseInt(user.hours) });
       } else {
         chart.data.datasets.push({
           label: user.name,
-          data: [{ x: parseInt(user.days), y: parseInt(user.minutes) }],
+          data: [{ x: parseInt(user.days), y: parseInt(user.hours) }],
           backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
           borderColor: `hsl(${i * 90}, 70%, 50%)`,
         });
