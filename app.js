@@ -42,7 +42,7 @@ let chart = new Chart(habitChart, {
         labels: {
           generateLabels: function (chart) {
             const datasets = chart.data.datasets;
-            const legendItems = chart.legend.legendItems;
+            const legendItems = chart.legend.legendItems || [];
             const legendLabels = [];
 
             datasets.forEach((dataset, i) => {
@@ -63,8 +63,15 @@ let chart = new Chart(habitChart, {
                 label.borderWidth = 1;
               }
 
-              legendItems[i] = label;
-              legendLabels.push(label);
+              if (legendItems[i]) {
+                legendItems[i].text = label.text;
+                legendItems[i].fillStyle = label.fillStyle;
+                legendItems[i].hidden = label.hidden;
+              } else {
+                legendItems[i] = label;
+              }
+
+              legendLabels.push(legendItems[i]);
             });
 
             return legendLabels;
@@ -78,7 +85,7 @@ let chart = new Chart(habitChart, {
         },
       },
     },
-  }
+  },
 });
 
 document.querySelectorAll('.form-control').forEach(item => {
@@ -89,33 +96,37 @@ document.querySelectorAll('.form-control').forEach(item => {
 function validateInput() {
   const maxDays = parseInt(this.getAttribute('max'));
   const maxHours = parseInt(this.nextElementSibling.getAttribute('max'));
-  if (parseInt(this.value) > maxDays) {
+  const inputDays = parseInt(this.value);
+  const inputHours = parseInt(this.nextElementSibling.value);
+
+  if (isNaN(inputDays) || inputDays > maxDays) {
     this.value = maxDays;
   }
-  if (parseInt(this.nextElementSibling.value) > maxHours) {
+
+  if (isNaN(inputHours) || inputHours > maxHours) {
     this.nextElementSibling.value = maxHours;
   }
 }
 
-function updateChartRealTime() { 
-const userInputData = [
-  { name: "Chess", days: document.getElementById('chessDays').value, hours: document.getElementById('chessHours').value },
-  { name: "Duolingo", days: document.getElementById('duolingoDays').value, hours: document.getElementById('duolingoHours').value },
-  { name: "Strava", days: document.getElementById('stravaDays').value, hours: document.getElementById('stravaHours').value },
-  { name: "Yousician", days: document.getElementById('yousicianDays').value, hours: document.getElementById('yousicianHours').value },
-];
+function updateChartRealTime() {
+  const userInputData = [
+    { name: "Chess", days: document.getElementById('chessDays').value, hours: document.getElementById('chessHours').value },
+    { name: "Duolingo", days: document.getElementById('duolingoDays').value, hours: document.getElementById('duolingoHours').value },
+    { name: "Strava", days: document.getElementById('stravaDays').value, hours: document.getElementById('stravaHours').value },
+    { name: "Yousician", days: document.getElementById('yousicianDays').value, hours: document.getElementById('yousicianHours').value },
+  ];
 
-chart.data.datasets.forEach((dataset, i) => {
-  if (i >= activities.length) { // Clear and update only user input datasets
-    dataset.data = []; // Clear existing data
-    const userInput = userInputData[i - activities.length]; // Get the corresponding user input
-    if (userInput.days && userInput.hours) { // Check if both fields are filled
-      dataset.data.push({ x: parseInt(userInput.days), y: parseInt(userInput.hours) });
+  chart.data.datasets.forEach((dataset, i) => {
+    if (i >= activities.length) { // Clear and update only user input datasets
+      dataset.data = []; // Clear existing data
+      const userInput = userInputData[i - activities.length]; // Get the corresponding user input
+      if (userInput.days && userInput.hours) { // Check if both fields are filled
+        dataset.data.push({ x: parseInt(userInput.days), y: parseInt(userInput.hours) });
+      }
     }
-  }
-});
+  });
 
-chart.update();
+  chart.update();
 }
 
 window.onload = function() {
