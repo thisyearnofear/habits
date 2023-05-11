@@ -373,3 +373,26 @@ li .delete {
   max-width: 600px; 
   height: auto;
 }
+
+
+/* For form layout */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form-row .form-group:last-child {
+  margin-right: 0;
+}
+
+/* To center the nav bar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
