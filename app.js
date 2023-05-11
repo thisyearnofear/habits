@@ -39,9 +39,10 @@ let chart = new Chart(habitChart, {
     }
 });
 
-document.querySelectorAll('.inputField').forEach(item => {
+document.querySelectorAll('.form-control').forEach(item => {
   item.addEventListener('input', updateAll)
 });
+
 
 function updateAll() {
   let chessDays = document.getElementById('chessDays').value;
@@ -54,37 +55,31 @@ function updateAll() {
   let yousicianMinutes = document.getElementById('yousicianMinutes').value;
 
   const userInputData = [
-    { name: "Chess", days: parseInt(chessDays), minutes: parseInt(chessMinutes) },
-    { name: "Duolingo", days: parseInt(duolingoDays), minutes: parseInt(duolingoMinutes) },
-    { name: "Strava", days: parseInt(stravaDays), minutes: parseInt(stravaMinutes) },
-    { name: "Yousician", days: parseInt(yousicianDays), minutes: parseInt(yousicianMinutes) },
+    { name: "Chess", days: chessDays, minutes: chessMinutes },
+    { name: "Duolingo", days: duolingoDays, minutes: duolingoMinutes },
+    { name: "Strava", days: stravaDays, minutes: stravaMinutes },
+    { name: "Yousician", days: yousicianDays, minutes: yousicianMinutes },
   ];
 
   userInputData.forEach((user, i) => {
-    let index = chart.data.datasets.findIndex(dataset => dataset.label === user.name);
-    if (index !== -1) {
-      chart.data.datasets[index].data.push({ x: user.days, y: user.minutes });
-    } else {
-      chart.data.datasets.push({
-        label: user.name,
-        data: [{ x: user.days, y: user.minutes }],
-        backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
-        borderColor: `hsl(${i * 90}, 70%, 50%)`,
-      });
+    if (user.days && user.minutes) { // Check if both fields are filled
+      let index = chart.data.datasets.findIndex(dataset => dataset.label === user.name);
+      if (index !== -1) {
+        chart.data.datasets[index].data.push({ x: parseInt(user.days), y: parseInt(user.minutes) });
+      } else {
+        chart.data.datasets.push({
+          label: user.name,
+          data: [{ x: parseInt(user.days), y: parseInt(user.minutes) }],
+          backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
+          borderColor: `hsl(${i * 90}, 70%, 50%)`,
+        });
+      }
+      chart.update();
     }
   });
-
-  chart.update();
-
-  // Clear the input fields after submission
-  document.getElementById("chessDays").value = '';
-  document.getElementById("chessMinutes").value = '';
-  document.getElementById("duolingoDays").value = '';
-  document.getElementById("duolingoMinutes").value = '';
-  document.getElementById("stravaDays").value = '';
-  document.getElementById("stravaMinutes").value = '';
-    document.getElementById("yousicianDays").value = '';
-  document.getElementById("yousicianMinutes").value = '';
 }
 
-updateAll();
+window.onload = function() {
+  updateAll();
+};
+
