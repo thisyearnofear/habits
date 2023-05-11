@@ -1,3 +1,5 @@
+window.onload = function() {
+
 const activities = [
   { name: "Chess", days: 5, hours: 7 },
   { name: "Duolingo", days: 7, hours: 1 },
@@ -116,6 +118,6 @@ function updateChartRealTime() {
   chart.update();
 }
 
-window.onload = function() {
   updateChartRealTime();
-};
+
+}
