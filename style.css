@@ -396,3 +396,16 @@ li .delete {
   justify-content: center;
   align-items: center;
 }
+
+/* Increase the background box size */
+.content-container {
+  max-width: 800px;
+}
+
+/* Increase the graph size */
+#habitChart {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
