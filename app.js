@@ -46,6 +46,7 @@ document.querySelectorAll('.form-control').forEach(item => {
 function updateChartRealTime() {
   chart.data.datasets.forEach(dataset => {
     dataset.data = []; // Clear existing data
+    dataset.pointStyle = 'circle'; // Set pointStyle to 'circle' for default shape (dots)
   });
 
   const userInputData = [
@@ -58,7 +59,7 @@ function updateChartRealTime() {
   userInputData.forEach((user, i) => {
     if (user.days && user.hours) { // Check if both fields are filled
       chart.data.datasets.push({
-        label: user.name,
+        label: `${user.name} (You)`, // Include " (You)" in the legend label
         data: [{ x: parseInt(user.days), y: parseInt(user.hours) }],
         backgroundColor: `hsl(${i * 90}, 70%, 50%)`,
         borderColor: `hsl(${i * 90}, 70%, 50%)`,
