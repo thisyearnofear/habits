@@ -366,3 +366,10 @@ li .delete {
     margin-bottom: 10px;
   }
 }
+
+#habitChart {
+  display: block;
+  margin: 0 auto;
+  max-width: 600px; 
+  height: auto;
+}
