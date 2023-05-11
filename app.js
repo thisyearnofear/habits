@@ -84,6 +84,33 @@ let chart = new Chart(habitChart, {
         radius: 5,
         borderWidth: 1
       }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          generateLabels: function (chart) {
+            const datasets = chart.data.datasets;
+            const legendItems = chart.legend.legendItems;
+            const legendLabels = [];
+
+            datasets.forEach((dataset, i) => {
+              const label = {
+                text: `${dataset.label} (${i < activities.length ? 'Papa' : 'You'})`,
+                fillStyle: dataset.backgroundColor,
+                strokeStyle: dataset.borderColor,
+                lineWidth: dataset.borderWidth,
+                hidden: !chart.isDatasetVisible(i),
+                index: i,
+                datasetIndex: i,
+              };
+              legendItems[i] = label;
+              legendLabels.push(label);
+            });
+
+                        return legendLabels;
+          }
+        }
+      }
     }
   }
 });
@@ -110,32 +137,10 @@ function updateChartRealTime() {
     }
   });
 
-  // Update legend labels
-  chart.options.plugins.legend.labels.generateLabels = function (chart) {
-    const datasets = chart.data.datasets;
-    const legendItems = chart.legend.legendItems;
-    const legendLabels = [];
-
-    datasets.forEach((dataset, i) => {
-      const label = {
-        text: `${dataset.label} (${i < activities.length ? 'Papa' : 'You'})`,
-        fillStyle: dataset.backgroundColor,
-        strokeStyle: dataset.borderColor,
-        lineWidth: dataset.borderWidth,
-        hidden: !chart.isDatasetVisible(i),
-        index: i,
-        datasetIndex: i,
-      };
-      legendItems[i] = label;
-      legendLabels.push(label);
-    });
-
-    return legendLabels;
-  };
-
   chart.update();
 }
 
 window.onload = function() {
   updateChartRealTime();
 };
+
