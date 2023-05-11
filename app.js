@@ -87,14 +87,20 @@ document.querySelectorAll('.form-control').forEach(item => {
 
 function validateInput() {
   const maxDays = parseInt(this.getAttribute('max'));
-  const maxHours = parseInt(this.nextElementSibling?.getAttribute('max') ?? this.getAttribute('max'));
+  let maxHours;
+  if (this.nextElementSibling) {
+    maxHours = parseInt(this.nextElementSibling.getAttribute('max'));
+  } else {
+    maxHours = parseInt(this.getAttribute('max'));
+  }
   if (parseInt(this.value) > maxDays) {
     this.value = maxDays;
   }
-  if (parseInt(this.nextElementSibling?.value) > maxHours) {
+  if (this.nextElementSibling && parseInt(this.nextElementSibling.value) > maxHours) {
     this.nextElementSibling.value = maxHours;
   }
 }
+
 
 
 function updateChartRealTime() {
