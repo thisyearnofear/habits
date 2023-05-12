@@ -10,16 +10,16 @@ window.onload = function() {
   let chart = new Chart(habitChart, {
     type: 'scatter',
     data: {
-  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], // Add labels for each day of the week
-  datasets: [
+      labels: daysOfWeek,
+      datasets: [
         ...activities.map((activity, i) => ({
           label: 'Papa',
-      data: [0.5, 1, 2, 0.5, 1, 2, 3], // Add Papa's data for each day of the week
-      backgroundColor: 'rgba(46, 134, 193, 1)', // Use the same color as the points
-      borderColor: 'rgba(46, 134, 193, 1)', // Use the same color as the points
-      pointRadius: 6, // Increase the size of points
-      pointHoverRadius: 8, // Increase the size of points on hover
-          showLine: i >= activities.length,
+          data: [0.5, 1, 2, 0.5, 1, 2, 3],
+          backgroundColor: 'rgba(46, 134, 193, 1)',
+          borderColor: 'rgba(46, 134, 193, 1)',
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          showLine: true, // Add this line to show the line
         })),
         ...activities.map((activity, i) => ({
           label: activity.name + ' (You)',
@@ -110,7 +110,7 @@ window.onload = function() {
     });
 
     chart.data.datasets.forEach((dataset, i) => {
-      if (i >= activities.length) {
+            if (i >= activities.length) {
         dataset.data = userInputData[i - activities.length].hours;
       }
     });
@@ -121,7 +121,21 @@ window.onload = function() {
   document.querySelectorAll('.form-control').forEach(item => {
     item.addEventListener('input', updateChartRealTime);
     item.addEventListener('input', validateInput);
+    item.addEventListener('input', calculateTotalHours);
   });
+
+  function calculateTotalHours() {
+    const dateInputs = document.querySelectorAll('.form-control:not(#runningHours)');
+    let totalHours = 0;
+
+    dateInputs.forEach(input => {
+      if (input.value !== '') {
+        totalHours += parseInt(input.value);
+      }
+    });
+
+    document.getElementById('runningHours').value = totalHours;
+  }
 
   function validateInput() {
     const inputValue = parseInt(this.value);
@@ -134,3 +148,4 @@ window.onload = function() {
 
   updateChartRealTime();
 }
+
