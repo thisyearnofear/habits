@@ -75,6 +75,15 @@ form input[type="number"]:focus {
   height: auto;
 }
 
+.chartjs-render-monitor .chart-scatter .chart-point {
+  background-color: rgba(0, 0, 0, 0.8) !important; /* Darker color for points */
+  border-color: rgba(0, 0, 0, 0.8) !important; /* Darker color for point border */
+  width: 12px !important; /* Increase the size of points */
+  height: 12px !important; /* Increase the size of points */
+  margin-left: -6px !important; /* Adjust the position of points */
+  margin-top: -6px !important; /* Adjust the position of points */
+}
+
 /* Media queries for responsiveness */
 @media (max-width: 600px) {
   body {
@@ -110,4 +119,16 @@ h1, h2 {
 /* Center the chart */
 #graph {
   text-align: center;
+}
+
+.proof-box {
+  background-color: orange;
+  color: white;
+  padding: 10px;
+  border-radius: 3px;
+  font-weight: bold;
+  text-align: center;
+  width: 120px;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
