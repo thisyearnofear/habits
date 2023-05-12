@@ -4,6 +4,24 @@ window.onload = function() {
   ];
 
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  
+  const masterData = [
+    { day: "Monday", minutes: 10 },
+    { day: "Tuesday", minutes: 15 },
+    { day: "Wednesday", minutes: 20 },
+    { day: "Thursday", minutes: 10 },
+    { day: "Friday", minutes: 15 },
+    { day: "Saturday", minutes: 20 },
+    { day: "Sunday", minutes: 20 },
+     ];
+  
+  // Convert the master data to the required format for the chart
+  masterData.forEach(data => {
+    const dayIndex = daysOfWeek.indexOf(data.day);
+    if (dayIndex !== -1) {
+      activities[0].minutes[dayIndex] = data.minutes;
+    }
+  });
 
   const habitChart = document.getElementById("habitChart").getContext("2d");
 
