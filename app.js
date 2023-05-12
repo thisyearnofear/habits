@@ -10,12 +10,16 @@ window.onload = function() {
   let chart = new Chart(habitChart, {
     type: 'scatter',
     data: {
-      datasets: [
+  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], // Add labels for each day of the week
+  datasets: [
         ...activities.map((activity, i) => ({
-          label: activity.name + ' (Papa)',
-          data: [],
-          backgroundColor: `rgba(54, 162, 235, 0.5)`,
-          borderColor: `rgba(54, 162, 235, 1)`,
+          label: 'Papa',
+      data: [0.5, 1, 2, 0.5, 1, 2, 3], // Add Papa's data for each day of the week
+      backgroundColor: 'rgba(46, 134, 193, 1)', // Use the same color as the points
+      borderColor: 'rgba(46, 134, 193, 1)', // Use the same color as the points
+      pointRadius: 6, // Increase the size of points
+      pointHoverRadius: 8, // Increase the size of points on hover
+          showLine: i >= activities.length,
         })),
         ...activities.map((activity, i) => ({
           label: activity.name + ' (You)',
@@ -24,6 +28,7 @@ window.onload = function() {
           borderColor: 'rgba(255, 206, 86, 1)',
           borderWidth: 1,
           pointStyle: 'circle',
+          showLine: true,
         })),
       ],
     },
