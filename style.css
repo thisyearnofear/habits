@@ -124,11 +124,10 @@ h1, h2 {
 .proof-box {
   background-color: orange;
   color: white;
-  padding: 10px;
+  padding: 8px;
   border-radius: 3px;
   font-weight: bold;
   text-align: center;
-  width: 120px;
-  margin: 0 auto;
+  width: 100%;
   margin-bottom: 10px;
 }
