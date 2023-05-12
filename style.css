@@ -132,18 +132,7 @@ h1, h2 {
   margin-bottom: 10px;
 }
 
-.proof-box:before {
-  content: "Proof";
-  display: block;
-  font-size: 14px;
+.proof-text {
+  font-weight: bold;
   margin-bottom: 5px;
-}
-
-.proof-box a {
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-.proof-box a:hover {
-  text-decoration: underline;
 }
