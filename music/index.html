@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Game Your Goals</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<body class="text-center">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav text-center">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Move</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../chess/index.html">Chess</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../language/index.html">Language</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Music</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <table class="table" id="habitTable">
+    <tbody>
+      <!-- Table rows added dynamically by the JavaScript code -->
+    </tbody>
+  </table>
+
+  <div class="container mt-5 content-container">
+    <h1 class="text-center">Music</h1>
+    <p class="lead text-center">Track your music practice and lessons</p>
+
+    <div id="graph" class="container mt-5">
+      <h2 class="text-center">Progress</h2>
+      <canvas id="habitChart" width="900" height="600"></canvas>
+    </div>
+
+    <form id="habitForm">
+      <div class="mb-3 row">
+        <div class="col text-center">
+          <label for="runningHours" class="form-label col-sm-7">Hrs This Week</label>
+          <input type="number" min="0" max="60" class="form-control col-sm-20" id="runningHours" placeholder="Mins">
+        </div>
+        <div class="col text-center">
+          <div class="form-group">
+            <a href="https://youtube.com/@papajams" target="_blank" rel="noopener noreferrer">
+              <div class="proof-box">YouTube</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <!-- Add your lessons here -->
+        <div class="col text-center">
+          <label for="lesson1" class="form-label col-sm-2">Lesson 1</label>
+          <input type="number" min="0" max="60" class="form-control col-sm-2" id="lesson1" placeholder="Mins">
+        </div>
+        <div class="col text-center">
+<label for="lesson2" class="form-label col-sm-2">Lesson 2</label>
+<input type="number" min="0" max="60" class="form-control col-sm-2" id="lesson2" placeholder="Mins">
+</div>
+<div class="col text-center">
+<label for="lesson3" class="form-label col-sm-2">Lesson 3</label>
+<input type="number" min="0" max="60" class="form-control col-sm-2" id="lesson3" placeholder="Mins">
+</div>
+<div class="col text-center">
+<label for="lesson4" class="form-label col-sm-2">Lesson 4</label>
+<input type="number" min="0" max="60" class="form-control col-sm-2" id="lesson4" placeholder="Mins">
+</div>
+<div class="col text-center">
+<label for="lesson5" class="form-label col-sm-2">Lesson 5</label>
+<input type="number" min="0" max="60" class="form-control col-sm-2" id="lesson5" placeholder="Mins">
+</div>
+<div class="col text-center">
+<label for="lesson6" class="form-label col-sm-2">Lesson 6</label>
+<input type="number" min="0" max="60" class="form-control col-sm-2" id="lesson6" placeholder="Mins">
+</div>
+</div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../music/music.js"></script>
+
+</body>
+</html>
