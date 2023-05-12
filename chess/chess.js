@@ -1,8 +1,4 @@
 window.onload = function() {
-  const activities = [
-    { name: "Chess", days: [], minutes: [] }
-  ];
-
   const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   
   const masterData = [
@@ -13,7 +9,11 @@ window.onload = function() {
     { day: "Friday", minutes: 15 },
     { day: "Saturday", minutes: 20 },
     { day: "Sunday", minutes: 20 },
-     ];
+  ];
+
+  const activities = [
+    { name: "Chess", days: daysOfWeek, minutes: masterData.map(data => data.minutes) }
+  ];
   
   // Convert the master data to the required format for the chart
   masterData.forEach(data => {
@@ -26,18 +26,18 @@ window.onload = function() {
   const habitChart = document.getElementById("habitChart").getContext("2d");
 
   let chart = new Chart(habitChart, {
-    type: 'scatter',
+    type: 'line', // Use line chart type to connect the points with a line
     data: {
       labels: daysOfWeek,
       datasets: [
         ...activities.map((activity, i) => ({
-                  label: 'Papa',
-          data: [10, 15, 20, 10, 15, 20, 25],
+          label: 'Papa',
+          data: activities[i].minutes,
           backgroundColor: 'rgba(46, 134, 193, 1)',
           borderColor: 'rgba(46, 134, 193, 1)',
           pointRadius: 6,
           pointHoverRadius: 8,
-          showLine: true, // Add this line to show the line
+          showLine: true,
         })),
         ...activities.map((activity, i) => ({
           label: activity.name + ' (You)',
@@ -111,59 +111,60 @@ window.onload = function() {
   });
 
   function updateChartRealTime() {
-    const userInputData = [
-      { name: "Chess", minutes: [] },
-    ];
 
-    daysOfWeek.forEach((day, i) => {
-      const inputElement = document.getElementById(day.toLowerCase());
-      const inputValue = inputElement.value.trim();
+const userInputData = [
+{ name: "Chess", minutes: [] },
+];
 
-      const activityData = {
-        x: day,
-        y: inputValue !== "" ? parseInt(inputValue) : null
-      };
+daysOfWeek.forEach((day, i) => {
+const inputElement = document.getElementById(day.toLowerCase());
+const inputValue = inputElement.value.trim();
+const activityData = {
+  x: day,
+  y: inputValue !== "" ? parseInt(inputValue) : null
+};
 
-      userInputData[0].minutes.push(activityData);
-    });
+userInputData[0].minutes.push(activityData);
+});
 
-    chart.data.datasets.forEach((dataset, i) => {
-      if (i >= activities.length) {
-        dataset.data = userInputData[i - activities.length].minutes;
-      }
-    });
+chart.data.datasets.forEach((dataset, i) => {
+if (i >= activities.length) {
+dataset.data = userInputData[i - activities.length].minutes;
+}
+});
 
-    chart.update();
-  }
+// Update the "Papa" dataset with the master data
+chart.data.datasets[0].data = masterData.map(data => ({ x: data.day, y: data.minutes }));
 
-  document.querySelectorAll('.form-control').forEach(item => {
-    item.addEventListener('input', updateChartRealTime);
-    item.addEventListener('input', validateInput);
-    item.addEventListener('input', calculateTotalMinutes);
-  });
-
-  function calculateTotalMinutes() {
-    const dateInputs = document.querySelectorAll('.form-control:not(#runningHours)');
-    let totalMinutes = 0;
-
-    dateInputs.forEach(input => {
-      if (input.value !== '') {
-        totalMinutes += parseInt(input.value);
-      }
-    });
-
-    document.getElementById('runningHours').value = totalMinutes;
-  }
-
-  function validateInput() {
-    const inputValue = parseInt(this.value);
-      const maxMinutes = 60;
-
-    if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
-      this.value = "";
-    }
-  }
-
-  updateChartRealTime();
+chart.update();
 }
 
+document.querySelectorAll('.form-control').forEach(item => {
+item.addEventListener('input', updateChartRealTime);
+item.addEventListener('input', validateInput);
+item.addEventListener('input', calculateTotalMinutes);
+});
+
+function calculateTotalMinutes() {
+const dateInputs = document.querySelectorAll('.form-control:not(#runningHours)');
+let totalMinutes = 0;
+
+dateInputs.forEach(input => {
+if (input.value !== '') {
+totalMinutes += parseInt(input.value);
+}
+});
+
+document.getElementById('runningHours').value = totalMinutes;
+}
+
+function validateInput() {
+const inputValue = parseInt(this.value);
+const maxMinutes = 60;
+
+if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
+this.value = "";
+}
+}
+
+updateChartRealTime();
