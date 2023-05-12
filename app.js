@@ -40,7 +40,7 @@ window.onload = function() {
         },
         y: {
           beginAtZero: true,
-          max: 24,
+          max: 10,
         },
       },
       plugins: {
