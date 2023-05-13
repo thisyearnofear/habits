@@ -8,7 +8,7 @@ window.onload = function() {
   const habitChart = document.getElementById("habitChart").getContext("2d");
 
   let chart = new Chart(habitChart, {
-    type: 'bar',
+    type: 'line',
     data: {
       labels: daysOfWeek,
       datasets: [
@@ -17,6 +17,8 @@ window.onload = function() {
           data: [10, 15, 20, 10, 15, 20, 25],
           backgroundColor: 'rgba(46, 134, 193, 1)',
           borderColor: 'rgba(46, 134, 193, 1)',
+          pointRadius: 6,
+          pointHoverRadius: 8,
           showLine: true,
         })),
         ...activities.map((activity, i) => ({
@@ -25,6 +27,7 @@ window.onload = function() {
           backgroundColor: 'rgba(255, 206, 86, 0.5)',
           borderColor: 'rgba(255, 206, 86, 1)',
           borderWidth: 1,
+          pointStyle: 'circle',
           showLine: true,
         })),
       ],
@@ -95,23 +98,23 @@ window.onload = function() {
     const lessonInputs = document.querySelectorAll('.form-control:not(#runningHours)');
     let totalMinutes = 0;
 
-    lessonInputs.forEach(input => {
-      if (input.value !== '') {
-        totalMinutes += parseInt(input.value);
-      }
-    });
-
-    document.getElementById('runningHours').value = totalMinutes;
+   lessonInputs.forEach(input => {
+  if (input.value !== '') {
+    totalMinutes += parseInt(input.value);
   }
+});
 
-  function validateInput() {
-    const inputValue = parseInt(this.value);
-    const maxMinutes = 60;
+document.getElementById('runningHours').value = totalMinutes;
+}
 
-    if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
-      this.value = "";
-    }
+function validateInput() {
+  const inputValue = parseInt(this.value);
+  const maxMinutes = 60;
+
+  if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
+    this.value = "";
   }
+}
 
-  updateChartRealTime();
+updateChartRealTime();
 }
