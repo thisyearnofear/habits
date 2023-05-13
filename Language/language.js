@@ -1,6 +1,6 @@
 window.onload = function() {
   const activities = [
-    { name: "Language", days: [], minutes: [] }
+    { name: "Music", days: [], minutes: [] }
   ];
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -8,17 +8,15 @@ window.onload = function() {
   const habitChart = document.getElementById("habitChart").getContext("2d");
 
   let chart = new Chart(habitChart, {
-    type: 'scatter',
+    type: 'bar',
     data: {
       labels: daysOfWeek,
       datasets: [
         ...activities.map((activity, i) => ({
-          label: 'Duolingo',
+          label: 'YouTube',
           data: [10, 15, 20, 10, 15, 20, 25],
           backgroundColor: 'rgba(46, 134, 193, 1)',
           borderColor: 'rgba(46, 134, 193, 1)',
-          pointRadius: 6,
-          pointHoverRadius: 8,
           showLine: true,
         })),
         ...activities.map((activity, i) => ({
@@ -27,7 +25,6 @@ window.onload = function() {
           backgroundColor: 'rgba(255, 206, 86, 0.5)',
           borderColor: 'rgba(255, 206, 86, 1)',
           borderWidth: 1,
-          pointStyle: 'circle',
           showLine: true,
         })),
       ],
@@ -64,11 +61,11 @@ window.onload = function() {
 
   function updateChartRealTime() {
     const userInputData = [
-      { name: "Language", minutes: [] },
+      { name: "Music", minutes: [] },
     ];
 
     daysOfWeek.forEach((day, i) => {
-      const inputElement = document.getElementById(day.toLowerCase());
+      const inputElement = document.getElementById(`lesson${i + 1}`);
       const inputValue = inputElement.value.trim();
 
       const activityData = {
@@ -95,16 +92,16 @@ window.onload = function() {
   });
 
   function calculateTotalMinutes() {
-    const timeInputs = document.querySelectorAll('.form-control:not(#languageMinutes)');
+    const lessonInputs = document.querySelectorAll('.form-control:not(#runningHours)');
     let totalMinutes = 0;
 
-    timeInputs.forEach(input => {
+    lessonInputs.forEach(input => {
       if (input.value !== '') {
         totalMinutes += parseInt(input.value);
       }
     });
 
-    document.getElementById('languageMinutes').value = totalMinutes;
+    document.getElementById('runningHours').value = totalMinutes;
   }
 
   function validateInput() {
@@ -113,7 +110,6 @@ window.onload = function() {
 
     if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
       this.value = "";
-   
     }
   }
 
