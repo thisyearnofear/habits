@@ -8,7 +8,7 @@ window.onload = function() {
   const habitChart = document.getElementById("habitChart").getContext("2d");
 
   let chart = new Chart(habitChart, {
-    type: 'line',
+    type: 'line', // Set the chart type to 'line' for a line chart
     data: {
       labels: daysOfWeek,
       datasets: [
@@ -98,23 +98,20 @@ window.onload = function() {
     const lessonInputs = document.querySelectorAll('.form-control:not(#runningHours)');
     let totalMinutes = 0;
 
-   lessonInputs.forEach(input => {
-  if (input.value !== '') {
-    totalMinutes += parseInt(input.value);
+    lessonInputs.forEach(input => {
+      if (input.value !== '') {
+        totalMinutes += parseInt(input.value);
+      }
+    });
+
+    document.getElementById('runningHours').value = totalMinutes;
   }
-});
 
-document.getElementById('runningHours').value = totalMinutes;
-}
-
-function validateInput() {
+  function validateInput() {
   const inputValue = parseInt(this.value);
   const maxMinutes = 60;
 
   if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
     this.value = "";
   }
-}
-
-updateChartRealTime();
 }
