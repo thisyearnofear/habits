@@ -4,6 +4,16 @@ window.onload = function() {
   ];
 
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  
+    const masterData = [
+    { day: "Monday", minutes: 40 },
+    { day: "Tuesday", minutes: 60 },
+    { day: "Wednesday", minutes: 40 },
+    { day: "Thursday", minutes: 30 },
+    { day: "Friday", minutes: 50 },
+    { day: "Saturday", minutes: 50 },
+    { day: "Sunday", minutes: 60 },
+  ];
 
   const habitChart = document.getElementById("habitChart").getContext("2d");
 
