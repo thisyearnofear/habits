@@ -86,16 +86,16 @@ window.onload = function() {
     });
 
     chart.update();
+    calculateTotalMinutes();
   }
 
   document.querySelectorAll('.form-control').forEach(item => {
     item.addEventListener('input', updateChartRealTime);
     item.addEventListener('input', validateInput);
-    item.addEventListener('input', calculateTotalMinutes);
   });
 
   function calculateTotalMinutes() {
-    const timeInputs = document.querySelectorAll('.form-control:not(#languageMinutes)');
+    const timeInputs = document.querySelectorAll('.form-control:not(#runningHours)');
     let totalMinutes = 0;
 
     timeInputs.forEach(input => {
@@ -104,7 +104,7 @@ window.onload = function() {
       }
     });
 
-    document.getElementById('languageMinutes').value = totalMinutes;
+    document.getElementById('runningHours').value = totalMinutes;
   }
 
   function validateInput() {
@@ -113,7 +113,6 @@ window.onload = function() {
 
     if (isNaN(inputValue) || inputValue < 0 || inputValue > maxMinutes) {
       this.value = "";
-   
     }
   }
 
