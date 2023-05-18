@@ -73,30 +73,32 @@ window.onload = function() {
   });
 
   function updateChartRealTime() {
-    const userInputData = [
-      { name: "Music", minutes: [] },
-    ];
+  const userInputData = [
+    { name: "Music", minutes: [] },
+  ];
 
-    daysOfWeek.forEach((day, i) => {
-      const inputElement = document.getElementById(`lesson${i + 1}`);
-      const inputValue = inputElement.value.trim();
+  const daysOfWeek = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-      const activityData = {
-        x: day,
-        y: inputValue !== "" ? parseInt(inputValue) : null
-      };
+  daysOfWeek.forEach((day, i) => {
+    const inputElement = document.getElementById(day); // Updated this line
+    const inputValue = inputElement.value.trim();
 
-      userInputData[0].minutes.push(activityData);
-    });
+    const activityData = {
+      x: day,
+      y: inputValue !== "" ? parseInt(inputValue) : null
+    };
 
-    chart.data.datasets.forEach((dataset, i) => {
-      if (i >= activities.length) {
-        dataset.data = userInputData[i - activities.length].minutes;
-      }
-    });
+    userInputData[0].minutes.push(activityData);
+  });
 
-    chart.update();
-  }
+  chart.data.datasets.forEach((dataset, i) => {
+    if (i >= activities.length) {
+      dataset.data = userInputData[i - activities.length].minutes;
+    }
+  });
+
+  chart.update();
+}
 
   document.querySelectorAll('.form-control').forEach(item => {
     item.addEventListener('input', updateChartRealTime);
