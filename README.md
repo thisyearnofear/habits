@@ -1,4 +1,4 @@
-# habits
+PERSIDIAN
 
 Habits is a habit tracking application primarily built with HTML, CSS, and JavaScript. 
 It allows users to track their habits throughout the week with an interactive chart.
@@ -15,3 +15,6 @@ Future
 App integration that populates the chart
 Ability to track your progress against others (in your circle)
 Extension into gaming models that incentivise habit streaks
+
+The site currently is in testing and resolves to www.persidian.co.uk via Github Pages 
+The landing page is www.persidian.com - a combination of two words, persistence + circadian
